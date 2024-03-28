@@ -15,19 +15,11 @@ export class AppComponent {
   password = 'aaa';
   useFingerprint = true;
   webAuthnAvailable = !!navigator.credentials && !!navigator.credentials.create;
-  // signupForm: FormGroup;
-
   constructor(
     private serverMockService: ServerMockService,
     private webAuthnService: WebAuthnService
   ) {
     this.users = serverMockService.getUsers();
-
-    // this.signupForm = fb.group({
-    //   email: ['a@a.com', [Validators.required, Validators.email]],
-    //   password: ['aaa', [Validators.required]],
-    //   confirmPassword: ['aaa', [Validators.required]],
-    // });
   }
 
   removeUser(email: string) {
@@ -41,7 +33,7 @@ export class AppComponent {
     // Save into the 'DB'
     const prevUser = this.serverMockService.getUser(this.email);
     if (prevUser) {
-      alert('🚫 User already exists with this email address');
+      alert('🚫 El usuario ya existe con esta dirección de correo electrónico');
       return;
     }
     const user: User = this.serverMockService.addUser({
@@ -75,9 +67,9 @@ export class AppComponent {
       .getUsers()
       .find((u: any) => u.email === this.email && u.password === this.password);
     if (user) {
-      alert('✅ Congrats! Authentication went fine!');
+      alert('✅ ¡Felicitaciones! ¡La autenticación fue bien!');
     } else {
-      alert('🚫 Sorry :( Invalid credentials!');
+      alert('🚫 Lo siento :( ¡Credenciales no válidas!');
     }
   }
 
@@ -91,11 +83,11 @@ export class AppComponent {
     this.webAuthnService
       .webAuthnSignin(user)
       .then((response: any) => {
-        alert('✅ Congrats! Authentication went fine!');
+        alert('✅ ¡Felicitaciones! ¡La autenticación fue bien!');
         console.log('SUCCESSFULLY GOT AN ASSERTION!', response);
       })
       .catch((error: any) => {
-        alert('🚫 Sorry :( Invalid credentials!');
+        alert('🚫 Lo siento :( ¡Credenciales no válidas!');
         console.log('FAIL', error);
       });
   }
